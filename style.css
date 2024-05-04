@@ -3,7 +3,74 @@
     margin:0;
     box-sizing: border-box;
 }
-#canvas  {
-    background: black;
+
+body {
+    height:100vh;
 }
+
+#container {
+    background: black;
+    height:100%;
+
+}
+#visualiser {
+    width:100%;
+    height:70%;
+
+}
+#buttons {
+    width:100%;
+    border:1px solid red;
+    padding:50px;
+    text-align: center;
+    align-content: center;
+    height:30%;
+
+}
+
+#canvas {
+    border:1px solid white;
+    height:100%;
+    width:100%;
+}
+
+.btn {
+    padding:20px;
+    margin: auto 20px;
+    box-shadow: rgba(255, 255, 255, 0.16) 0px 1px 4px;
+    cursor: pointer;
+    border-width: 3px;
+    border-style: solid;
+    border-image: linear-gradient(to top, #c471f5 0%, #fa71cd 100%) 1 / 3px;
+    background-image: linear-gradient(-45deg, black 50%, #c471f5 0%, #fa71cd 100%);
+    background-clip: text;
+    background-size: 600% 100%;
+    background-position: right bottom;
+    transition: background-position 1s ease-in-out, color 1s ease-in-out;
+    color: #fa71cd;
+    }   
+
+.btn input, .btn span {
+    background: transparent;
+    border:none;
+    outline: none;
+    font: 500 15px "Archivo Black";
+    text-transform: capitalize;
+}
+
+#file {
+    display: none;
+}
+
+.btn:hover {
+    color: whitesmoke;
+    background-clip: initial;
+    -webkit-background-clip: initial;
+    -webkit-text-fill-color: initial;
+    -moz-background-clip: initial;
+    -moz-text-fill-color: initial;
+    background-position: left top;
+    transition: background-position 1s ease-in-out, color 1s ease-in-out;
+}
+
 

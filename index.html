@@ -4,13 +4,26 @@
     <meta charset="UTF-8">
     <title>Music visualizer</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Archivo+Black&display=swap" rel="stylesheet">
+
 </head>
 <body>
         <div id="container">
-            <input type="file" id="file">
-            <canvas id="canvas"></canvas>
-            <audio id="audio" controls></audio>
+            <div id="visualiser">
+                <canvas id="canvas"></canvas>
+                <audio type="audio/*" src="https://www.youtube.com/watch?v=sAfMd7Rei-A&list=RDMMTzm5xxLCEPU&index=2" id="audio" controls hidden></audio>
+            </div>
+            <div id="buttons">
+                <label class="btn" for="file">
+                    <input type="file" id="file">
+                    <span>upload audio</span>
+                </label>
+                <label class="btn" for="link">
+                    <input onchange="loadAudioURL(this.value)" type="text" name="link" id="link" placeholder="Paste link here.. e.g. https://www.youtube.com/watch?v=e-OfSWE9uV4">
+                </label>
+            </div>
         </div>
+
 
         <script src="main.js"></script>
 </body>
