@@ -5,26 +5,30 @@
     <title>Music visualizer</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css?family=Archivo+Black&display=swap" rel="stylesheet">
-
 </head>
 <body>
         <div id="container">
             <div id="visualiser">
                 <canvas id="canvas"></canvas>
-                <audio type="audio/*" src="https://www.youtube.com/watch?v=sAfMd7Rei-A&list=RDMMTzm5xxLCEPU&index=2" id="audio" controls hidden></audio>
+                <audio type="audio/*" id="audio" controls hidden></audio>
             </div>
             <div id="buttons">
-                <label class="btn" for="file">
+                <input type="radio" id="bar" value="bar" name="shape" checked>
+                    <label class="btn shape-label" for="bar">bar</label>
+                    <input type="radio" id="circle" value="circle" name="shape">
+                    <label class="btn shape-label" for="circle">circle</label>
+                    <label class="btn" for="file">
                     <input type="file" id="file">
                     <span>upload audio</span>
                 </label>
                 <label class="btn" for="link">
-                    <input onchange="loadAudioURL(this.value)" type="text" name="link" id="link" placeholder="Paste link here.. e.g. https://www.youtube.com/watch?v=e-OfSWE9uV4">
+                    <input onchange="downloadAudio(this.value)" type="text" name="link" id="link" placeholder="Paste link here.. e.g. https://www.youtube.com/watch?v=GBIIQ0kP15E">
                 </label>
             </div>
         </div>
 
-
         <script src="main.js"></script>
+        <script src="audio-converter.js"></script>
+        
 </body>
 </html>

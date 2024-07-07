@@ -2,6 +2,7 @@ const canvas = document.getElementById('canvas');
 const container = document.getElementById('container');
 const audioFileInput = document.getElementById('file');
 const audio1 = document.getElementById('audio');
+const anchor = document.getElementById('anchor')
 
 const ctx = canvas.getContext('2d');
 let MAX_VALUE = 0;
@@ -9,7 +10,16 @@ let MAX_VALUE = 0;
 let audioSource;
 let analyser;
 
-container.addEventListener('click', playSound);
+container.addEventListener('click', () => {
+    playSound(shape)
+});
+
+const radioButtons = document.querySelectorAll('input[name="shape"]');
+let shape = 'bar';
+
+radioButtons.forEach(radio => {
+  radio.addEventListener('change', (event) => playSound(event));
+});
 
 audioFileInput.addEventListener('change', function() {
     const file = audioFileInput.files[0];
@@ -17,7 +27,7 @@ audioFileInput.addEventListener('change', function() {
     
     reader.onload = function(event) {
       audio1.src = event.target.result;
-      playSound();
+      playSound(shape);
     };
     
     if (file) {
@@ -25,7 +35,7 @@ audioFileInput.addEventListener('change', function() {
     }
   });
 
-function playSound() {
+function playSound(shape) {
     const audioCtx = new AudioContext();
     audio1.load();
     audio1.play();
@@ -33,7 +43,7 @@ function playSound() {
     analyser = audioCtx.createAnalyser();
     audioSource.connect(analyser);
     analyser.connect(audioCtx.destination);
-    analyser.fftSize = 2048; // number of bars to display
+    analyser.fftSize = 512; // number of bars to display
     const bufferLength = analyser.frequencyBinCount; 
     const dataArray = new Uint8Array(bufferLength);
 
@@ -45,8 +55,11 @@ function playSound() {
         ctx.clearRect(0,0,canvas.width, canvas.height)
         analyser.getByteFrequencyData(dataArray);
         MAX_VALUE = findMaxValue(dataArray);
-        console.warn(MAX_VALUE);
-        drawCircleVisualiser(bufferLength, dataArray, x , barWidth);
+        if (shape === 'bar') {
+            drawBarVisualiser(bufferLength, dataArray, x, barWidth);
+        } else {
+            drawCircleVisualiser(bufferLength, dataArray, x , barWidth);
+        }
         requestAnimationFrame(animate);
 
     }
@@ -58,8 +71,7 @@ function drawBarVisualiser(bufferLength, dataArray, x, barWidth) {
     let barHeight;
     for (let i=0; i< bufferLength; i++) {
         barHeight = calculateBarHeight(dataArray[i]);
-        //ctx.fillStyle = `hsl(${i}, 100%, 50%)`;
-        ctx.fillStyle = `hsl(${mapToHue(i)}, 84%, 69%)`;
+        ctx.fillStyle = `hsl(${i+270}, ${84+i}%, ${69}%)`;
 
         ctx.fillRect(canvas.width / 2 + x, canvas.height - barHeight, barWidth, barHeight);
         ctx.fillRect(canvas.width/2 - x, canvas.height - barHeight, barWidth, barHeight);
@@ -78,17 +90,12 @@ function drawCircleVisualiser(bufferLength, dataArray, x, barWidth) {
         barHeight = calculateBarHeightForCircle(dataArray[i]);
         ctx.save();
         ctx.translate(canvas.width /2, canvas.height/2);
-        ctx.rotate(i + Math.PI*8 / bufferLength);
-        ctx.fillStyle = `hsl(${mapToHue(i)}, 84%, 69%)`;
+        ctx.rotate(i + Math.PI*5);
+        ctx.fillStyle = `hsl(${Math.max(270, i,  i+270)}, ${84+i}%, ${69}%)`;
         ctx.fillRect(0, 0, barWidth*3, barHeight);
         x+= barWidth;
         ctx.restore();
     }
-}
-
-function loadAudioURL(url) {
-    audio1.src = url;
-    audio1.play();
 }
 
 function calculateBarHeight(value) {
@@ -102,9 +109,7 @@ function calculateBarHeightForCircle(value) {
 function findMaxValue(dataArray) {
     let max = 0;
 
-    // Iterate through the array
     for (let i = 0; i < dataArray.length; i++) {
-        // Update max if the current value is greater
         if (dataArray[i] > max) {
             max = dataArray[i];
         }
@@ -126,3 +131,34 @@ function mapToHue(i) {
     return hue;
 }
 
+
+function downloadAudio(link) {
+    const options = {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': X_RAPID_API_KEY,
+            'X-RapidAPI-Host': X_RAPID_API_HOST
+        }
+    };
+    
+    
+    let url = `https://youtube-mp3-downloader2.p.rapidapi.com/ytmp3/ytmp3/?url=${link}`;
+    let x;
+    fetch(url, options)
+        .then(response => response.json())
+        .then(response => {
+            x = response.dlink;
+            downloadMP3(x)    
+        })
+        .catch(err => console.error(err));
+}
+
+function downloadMP3(url) {
+    url = "https://mymp3.xyz/phmp3?fname=Q83ZxBBb-uM128.mp3"
+    console.log(url)
+     fetch(url)
+    .then(response => response.json())
+    .then(res => res)
+    .catch(err => console.error(err))
+    .finally(() => console.log('im here'))
+}

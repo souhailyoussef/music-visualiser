@@ -20,7 +20,6 @@ body {
 }
 #buttons {
     width:100%;
-    border:1px solid red;
     padding:50px;
     text-align: center;
     align-content: center;
@@ -29,7 +28,6 @@ body {
 }
 
 #canvas {
-    border:1px solid white;
     height:100%;
     width:100%;
 }
@@ -73,4 +71,38 @@ body {
     transition: background-position 1s ease-in-out, color 1s ease-in-out;
 }
 
+input[type="radio"] {
+    display: none !important;
+}
+input[type="radio"]:checked + label.btn {
+    animation: none;
+    background-clip: initial;
+    -webkit-background-clip: initial;
+    -webkit-text-fill-color: initial;
+    -moz-background-clip: initial;
+    -moz-text-fill-color: initial;
+    background: linear-gradient(-45deg,#c471f5 0%, #fa71cd 100%);
+    color:white;
 
+
+}
+
+::placeholder {
+    color: whitesmoke;
+    opacity: 0.5; /* Firefox */
+  }
+  
+  ::-ms-input-placeholder { /* Edge 12 -18 */
+    color: whitesmoke;
+  }
+
+  #link {
+    min-width: 300px;
+    text-transform: none;
+    font-size: 0.5rem;
+  }
+
+  .shape-label {
+    font: 500 15px "Archivo Black";
+    text-transform: capitalize;
+  }
