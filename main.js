@@ -1,8 +1,10 @@
+const X_RAPID_API_KEY = '0dbd38fc8dmsh7004146a64a1761p17226ejsnceab381ff0ef';
+const X_RAPID_API_HOST = 'youtube-mp3-downloader2.p.rapidapi.com';
 const canvas = document.getElementById('canvas');
 const container = document.getElementById('container');
 const audioFileInput = document.getElementById('file');
 const audio1 = document.getElementById('audio');
-const anchor = document.getElementById('anchor')
+const anchor = document.getElementById('anchor');
 
 const ctx = canvas.getContext('2d');
 let MAX_VALUE = 0;
@@ -14,13 +16,15 @@ container.addEventListener('click', () => {
     playSound(shape)
 });
 
-const radioButtons = document.querySelectorAll('input[name="shape"]');
 let shape = 'bar';
 
-radioButtons.forEach(radio => {
-  radio.addEventListener('change', (event) => playSound(event));
+document.querySelectorAll('input[name="shape"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+        if (this.checked) {
+            playSound(this.value); // Call playSound function with the selected shape value
+        }
+    });
 });
-
 audioFileInput.addEventListener('change', function() {
     const file = audioFileInput.files[0];
     const reader = new FileReader();
@@ -115,20 +119,6 @@ function findMaxValue(dataArray) {
         }
     }
     return max;
-}
-
-function mapToHue(i) {
-    const minHue = 272;
-    const maxHue = 316;
-    const range = (maxHue - minHue)+200;
-
-    let hue = minHue + (i % range);
-
-    if (hue < minHue) {
-        hue += range;
-    }
-
-    return hue;
 }
 
 

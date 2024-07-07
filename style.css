@@ -24,6 +24,9 @@ body {
     text-align: center;
     align-content: center;
     height:30%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
 
 }
 
@@ -34,7 +37,7 @@ body {
 
 .btn {
     padding:20px;
-    margin: auto 20px;
+    margin: 10px 20px;
     box-shadow: rgba(255, 255, 255, 0.16) 0px 1px 4px;
     cursor: pointer;
     border-width: 3px;
